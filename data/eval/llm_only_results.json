@@ -1,0 +1,293 @@
+[
+  {
+    "id": "q01",
+    "category": "mitre",
+    "question": "What is T1053 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053",
+      "Scheduled Task/Job"
+    ],
+    "matched_contains": [
+      "T1053"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "La technique T1053 dans MITRE ATT&CK s'appelle \"Phishing de courrier électronique\". Cela représente un attaquant qui envoie des courriels fraudulents à une cible visée avec l'objectif d'obtenir ses informations personnelles ou des droits d'accès, par exemple en la persuadant de cliquer sur un lien malveillant ou en révélant son identifiant et mot de passe."
+  },
+  {
+    "id": "q02",
+    "category": "mitre",
+    "question": "What is T1053.005 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.005",
+      "Scheduled Task"
+    ],
+    "matched_contains": [
+      "T1053.005"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "La technique numéro T1053.005 dans le cadre du MITRE ATT&CK est connue sous le nom de \"Phishing: Attachment Lure.\" Il s'agit d'une méthode qui consiste à envoyer des courriels frauduleux contenant un fichier infecté, appelé pièce jointe, pour tenter d'obtenir les informations personnelles ou le contrôle de l'ordinateur de la victime."
+  },
+  {
+    "id": "q03",
+    "category": "mitre",
+    "question": "What is T1021.005 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1021.005",
+      "VNC"
+    ],
+    "matched_contains": [
+      "T1021.005"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "La technique T1021.005 dans le cadre de la liste MITRE ATT&CK représente l'utilisation d'un téléchargement externe de données. Cela désigne une méthode utilisée par les menaces informatiques pour récupérer des fichiers ou des logiciels de façon externe à leur système cible, généralement en utilisant des liens hypertexte vers un serveur distant (téléchargement HTTP/HTTPS) ou d'autres méthodes de transfert de fichiers."
+  },
+  {
+    "id": "q04",
+    "category": "mitre",
+    "question": "What is T1560.001 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1560.001",
+      "Archive via Utility"
+    ],
+    "matched_contains": [
+      "T1560.001"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "La technique T1560.001, selon la nomenclature de MITRE ATT&CK, est connue sous le nom d'« Exfiltration de données via un système de transfert de fichier (FTP) ». Cette technique décrit l'utilisation d'un protocole FTP pour extraire des données confidentielles depuis une cible compromisée."
+  },
+  {
+    "id": "q05",
+    "category": "mitre",
+    "question": "What is T1055.011 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1055.011",
+      "Extra Window Memory Injection"
+    ],
+    "matched_contains": [
+      "T1055.011"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "En français :\nT1055.011 est une technique d'attaque dans le cadre de l'ATTAQUE MITRE, qui se rapporte à l'utilisation d'outils dits \"living off the land\". Cette technique consiste plus spécifiquement à utiliser PowerShell pour détourner des processus système et tromper les analystes de sécurité."
+  },
+  {
+    "id": "q06",
+    "category": "mitre",
+    "question": "What is T1205.002 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1205.002",
+      "Socket Filters"
+    ],
+    "matched_contains": [
+      "T1205.002"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "T1205.002 dans MITRE ATT&CK représente l'action \"Utilisation de logiciels légitimes pour exécuter des commandes dangereuses\". Cela signifie que les attaquants peuvent utiliser des applications ou outils légitimes, tels que Microsoft Office Macro ou PowerShell, pour exécuter des commandes malveillantes dans le but de compromettre la sécurité du système."
+  },
+  {
+    "id": "q07",
+    "category": "mitre",
+    "question": "What is T1053.002 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.002",
+      "At"
+    ],
+    "matched_contains": [
+      "T1053.002",
+      "At"
+    ],
+    "coverage_score": 1.0,
+    "mode": "llm_only",
+    "answer": "En réponse à votre question, T1053.002 fait partie de la liste MITRE ATT&CK, qui est un catalogue des techniques utilisé par les acteurs malveillants pour attaquer des systèmes informatiques.\n\nT1053 représente l'utilisation de logiciels destinés à échapper aux analyses de sécurité ou d'éviter les détections, et T1053.002 plus précisément désigne la modification d'extensions système (System DLL Hijacking).\n\nCette technique consiste à remplacer une DLL dans un répertoire où un exécutable cherche habituellement cette DLL, avec une version malveillante. Cela peut permettre aux attaquants de prendre le contrôle du système informatique ou d'y injecter des logiciels malveillants."
+  },
+  {
+    "id": "q08",
+    "category": "mitre",
+    "question": "What is T1053.003 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.003",
+      "Cron"
+    ],
+    "matched_contains": [
+      "T1053.003"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "En Mitre ATT&CK, T1053.003 représente l'action appelée \"Lateral Tool Transfer\". Cela signifie le transfert de logiciels utilitaires (outils) entre des machines compromises dans le but de faciliter les actions malveillantes. Cela peut se produire via différentes méthodes comme par exemple la diffusion via réseau en utilisant des fichiers partagés ou des outils spécifiques à ce type d'attaque."
+  },
+  {
+    "id": "q09",
+    "category": "mitre",
+    "question": "What is T1053.007 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.007",
+      "Container Orchestration Job"
+    ],
+    "matched_contains": [
+      "T1053.007"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "En mitigeant les menaces informatiques, il s'agit de l'action T1053.007 selon le cadre MITRE ATT&CK. Cet élément fait référence à l'utilisation d'outils de port scan (scan de ports). Il s'agit de la méthode où un attaquant tente de détecter les services en exécution sur un hôte ou une réseau en tentant de se connecter à des adresses IP spécifiques par le biais de différents ports. Cela permet aux attaquants d'identifier les vulnérabilités et d'obtenir ainsi accès au système ciblé."
+  },
+  {
+    "id": "q10",
+    "category": "mitre",
+    "question": "What is the MITRE ATT&CK ID for Scheduled Task?",
+    "expected_contains": [
+      "T1053.005",
+      "Scheduled Task"
+    ],
+    "matched_contains": [
+      "Scheduled Task"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "L'ID du MITRE ATT&CK pour la création d'une tâche planifiée est T1086 : Scheduled Task / Job."
+  },
+  {
+    "id": "q11",
+    "category": "cve",
+    "question": "What is CVE-2024-13785?",
+    "expected_contains": [
+      "CVE-2024-13785",
+      "ARForms"
+    ],
+    "matched_contains": [
+      "CVE-2024-13785"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "CVE-2024-13785 est une identifiant de vulnérabilité informatique (CVE) qui représente une faille potentielle dans un produit ou un système informatique. Comme ce numéro de référence n'existe pas dans les bases de données actuelles, il est impossible pour moi de vous fournir des informations précises à ce sujet. Il faudra attendre que la vulnérabilité soit identifiée et documentée pour avoir plus d'informations sur CVE-2413785."
+  },
+  {
+    "id": "q12",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2024-13785?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-94"
+    ],
+    "matched_contains": [],
+    "coverage_score": 0.0,
+    "mode": "llm_only",
+    "answer": "La gravité de la vulnérabilité CVE-2024-13785 est encore inconnue à ce jour, car elle n'a pas encore été publiée. Toutefois, lorsqu'une nouvelle vulnérabilité est découverte, son niveau de gravité dépend généralement de l'impact potentiel qu'elle peut avoir sur la sécurité des systèmes affectés.\n\nEn ce qui concerne les faiblesses, il est important de préciser que les informations sur une vulnérabilité restent confidentielles pendant le processus de correction par les développeurs du produit concerné et que leur divulgation avant cette période peut entraîner des conséquences néfastes. En tant qu'assistant cyber-sécurité, il est important pour moi de respecter ce protocole et d'attendre l'annonce officielle du vulnérabilité pour pouvoir fournir une analyse détaillée de sa faiblesse et de ses impacts potentiels."
+  },
+  {
+    "id": "q13",
+    "category": "cve",
+    "question": "What is CVE-2025-13910?",
+    "expected_contains": [
+      "CVE-2025-13910",
+      "WP-WebAuthn"
+    ],
+    "matched_contains": [
+      "CVE-2025-13910"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "CVE-2025-13910 est une vulnérabilité inconnue (Unknown) en ce moment car cette identification a été attribuée mais aucune information détaillée n'est disponible sur cette vulnérabilité. Cette notation CVE (Common Vulnerabilities and Exposures) représente un problème de sécurité lié à un produit logiciel ou matériel pour lequel il est important d'être informé des mises à jour et des corrections effectuées par les fabricants ou fournisseurs."
+  },
+  {
+    "id": "q14",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2025-13910?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [],
+    "coverage_score": 0.0,
+    "mode": "llm_only",
+    "answer": "La gravité de la vulnérabilité CVE-2025-13910 est considérée comme élevée. Cette faille peut entraîner un risque important pour la sécurité des systèmes concernés, en particulier si elle est exploitée par un attaquant malveillant.\n\nLa faiblesse principale de cette vulnérabilité est liée à une vulnérabilité d'exécution arbitraire dans le logiciel en question. Une telle faille permet aux attaquants de s'introduire sur un système, d'exécuter des commandes arbitraires et d'effectuer divers actes malveillants, comme l'accès à des données sensibles, la modification de fichiers ou encore l'installation de logiciels malveillants.\n\nIl est donc important de corriger cette vulnérabilité en appliquant les correctifs proposés par le fournisseur du logiciel concerné."
+  },
+  {
+    "id": "q15",
+    "category": "cve",
+    "question": "What is CVE-2025-14037?",
+    "expected_contains": [
+      "CVE-2025-14037",
+      "Invelity Product Feeds"
+    ],
+    "matched_contains": [
+      "CVE-2025-14037"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "La CVE-2025-14037 est une vulnérabilité de sécurité identifiée (CVE pour Common Vulnerabilities and Exposures) survenant en 2025, le 14 mars, chez un fournisseur spécifique. Cette vulnérabilité peut avoir un impact significatif sur la sécurité informatique si elle n'est pas correctement corrigée car elle pourrait être exploitée par des pirates informatiques malveillants. Néanmoins, aucune information détaillée n'est actuellement disponible car cette vulnérabilité n'a pas encore été publiquement révélée. Il est donc recommandé de rester informé des mises à jour sécuritaires des produits concernés pour éviter tout risque potentiel."
+  },
+  {
+    "id": "q16",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2025-14037?",
+    "expected_contains": [
+      "HIGH",
+      "CWE-352"
+    ],
+    "matched_contains": [],
+    "coverage_score": 0.0,
+    "mode": "llm_only",
+    "answer": "La sévérité de la vulnérabilité CVE-2025-14037 est évaluée à « critique » (Critical) selon le système des scores Common Vulnerability Scoring System (CVSS). Cela signifie que cette faille est susceptible de présenter une menace importante pour les utilisateurs.\n\nLa faiblesse se rapporte à une vulnérabilité dans un produit spécifique, dont les détails ne sont pas encore disponibles car la vulnérabilité a été récemment identifiée et n'a pas encore été documentée par détaillé. Pour plus d'informations, je vous invite à suivre les mises à jour officielles des autorités concernées ou des développeurs du produit en question."
+  },
+  {
+    "id": "q17",
+    "category": "cve",
+    "question": "What is CVE-2026-0609?",
+    "expected_contains": [
+      "CVE-2026-0609",
+      "Logo Slider"
+    ],
+    "matched_contains": [
+      "CVE-2026-0609"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "CVE-2026-0609 désigne une vulnérabilité potentielle qui a été identifiée dans le logiciel XYZ. Cette vulnérabilité peut permettre à un intrus de pénétrer dans le système et d'exécuter des actions malveillantes. Nous vous recommandons vivement de mettre à jour votre logiciel en fonction des directives fournies par les développeurs pour éviter cette vulnérabilité."
+  },
+  {
+    "id": "q18",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2026-0609?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [],
+    "coverage_score": 0.0,
+    "mode": "llm_only",
+    "answer": "La gravité de la faille CVE-2026-0609 est évaluée à \"critique\" (Critical) car elle permet d'exécuter des codes arbitraires sur un système affecté. Cette faille peut donc entraîner une vulnérabilité sécuritaire importante, pouvant conduire à des pertes de données ou à des intrusions de confidentialités importantes.\n\nLe défaut (ou weakness) concerne une faible validation d'input dans un logiciel spécifique qui peut mener à l'exécution de code arbitraire si un adversaire en fournit un via un débordement de tampon ou une injection de formulaire. Il est important pour les utilisateurs de mettre à jour ce logiciel pour éviter cette faille."
+  },
+  {
+    "id": "q19",
+    "category": "cve",
+    "question": "What is CVE-2026-1093?",
+    "expected_contains": [
+      "CVE-2026-1093",
+      "WPFAQBlock"
+    ],
+    "matched_contains": [
+      "CVE-2026-1093"
+    ],
+    "coverage_score": 0.5,
+    "mode": "llm_only",
+    "answer": "Le CVE-2026-1093 est une faille de sécurité identifiée dans un logiciel ou un système d'information, qui a été enregistré dans le catalogue des vulnérabilités du National Vulnerability Database (NVD) le 26 avril 2026. Cependant, étant donné que la date du 26 avril 2026 n'est pas encore atteinte, les détails précis de cette faille sont inconnus à ce jour."
+  },
+  {
+    "id": "q20",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2026-1093?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [],
+    "coverage_score": 0.0,
+    "mode": "llm_only",
+    "answer": "La sévérité de la faille CVE-2026-1093 est considérée comme très élevée (CVSS v3 9,8). Cette faille peut permettre à un attaquant de prendre le contrôle total d'un système (Remote Code Execution, RCE) en exploitant une vulnérabilité dans une composante logicielle spécifique. Il s'agit donc d'une vulnérabilité majeure qui peut avoir des conséquences très graves sur la sécurité des systèmes affectés."
+  }
+]

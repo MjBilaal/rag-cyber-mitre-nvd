@@ -1,0 +1,53 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.csr
+*.srl
+*.p12
+*.pfx
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Données lourdes / régénérables
+data/raw/
+vectorstore/
+*.index
+*.faiss
+
+# Forensic : dumps et artefacts malveillants
+dumps/
+extractions/
+*.raw
+*.vmem
+*.mem
+*.lime
+*.dmp
+*.sys
+*.bin
+
+# Archives
+*.zip
+*.rar
+*.gz
+*.7z
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Spécifique au projet : sorties du pipeline (régénérées par les scripts)
+data/processed/
+data/sample/rag_documents.json
+data/sample/rag_chunks.json

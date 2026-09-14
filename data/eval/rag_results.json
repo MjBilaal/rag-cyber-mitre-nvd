@@ -1,0 +1,395 @@
+[
+  {
+    "id": "q01",
+    "category": "mitre",
+    "question": "What is T1053 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053",
+      "Scheduled Task/Job"
+    ],
+    "matched_contains": [
+      "T1053",
+      "Scheduled Task/Job"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La technique T1053 dans MITRE ATT&CK s'appelle « Scheduled Task/Job » (en français : « Tâche planifiée » ou « programme planifié »). Cela désigne l'utilisation par les adversaires de la fonctionnalité de programmation des tâches pour exécuter du code malicieux initialement ou à intervalles réguliers. Cette technique peut être mise en œuvre sur différents systèmes d'exploitation, notamment Windows, Linux et macOS. Les outils de programmation des tâches sont disponibles dans tous les grands systèmes d'exploitation pour planifier l'exécution de programmes ou de scripts à une date et à une heure spécifiées.\n\nSelon la source 2, les adversaires peuvent également utiliser ce mécanisme pour exécuter un processus sous le contexte d'un compte spécifique, par exemple un compte ayant des droits élevés. Cela peut être comparé à [System Binary Proxy Execution](https://attack.mitre.org/techniques/T1218), une technique où les adversaires ont également abusé de la programmation des tâches pour potentiellement masquer l'exécution unique sous un processus système fiable.",
+    "sources": [
+      "mitre_163_chunk_1",
+      "mitre_163_chunk_2"
+    ]
+  },
+  {
+    "id": "q02",
+    "category": "mitre",
+    "question": "What is T1053.005 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.005",
+      "Scheduled Task"
+    ],
+    "matched_contains": [
+      "T1053.005",
+      "Scheduled Task"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "En MITRE ATT&CK, T1053.005 désigne une technique d'attaque nommée \"Scheduled Task\". Cela implique l'utilisation abusive de la programmation des tâches planifiées dans Windows pour exécuter du code malveillant à des moments précis initial ou récurrents. Il existe plusieurs moyens d'accéder au Scheduler de tâches dans Windows, dont l'exécution directe de l'utilitaire [schtasks](https://attack.mitre.org/software/S0111) à la ligne de commande ou l'ouverture du Scheduler de tâches via l'interface graphique dans le Panneau de contrôle des outils Administrateur. Les adversaires peuvent également utiliser PowerShell, les bibliothèques netapi32 et Windows Management Instrumentation (WMI) pour créer une tâche planifiée.",
+    "sources": [
+      "mitre_2_chunk_1",
+      "mitre_2_chunk_2",
+      "mitre_2_chunk_3",
+      "mitre_2_chunk_4"
+    ]
+  },
+  {
+    "id": "q03",
+    "category": "mitre",
+    "question": "What is T1021.005 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1021.005",
+      "VNC"
+    ],
+    "matched_contains": [
+      "T1021.005",
+      "VNC"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La technique T1021.005 de MITRE ATT&CK s'appelle \"Utilisation de VNC\" (Usage of VNC). Cela permet aux adversaires de contrôler à distance des ordinateurs en utilisant le protocole de partage d'écran Virtual Network Computing (VNC).",
+    "sources": [
+      "mitre_5_chunk_1",
+      "mitre_5_chunk_2"
+    ]
+  },
+  {
+    "id": "q04",
+    "category": "mitre",
+    "question": "What is T1560.001 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1560.001",
+      "Archive via Utility"
+    ],
+    "matched_contains": [
+      "T1560.001",
+      "Archive via Utility"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "En MITRE ATT&CK, T1560.001 s'appelle Archive via Utility. Cela signifie que les adversaires peuvent utiliser divers outils pour compresser et/ou chiffrer des données avant leur extraction. Beaucoup d'outils comportent des fonctionnalités de compression, chiffrement ou autre packageage de données rendant leur transport plus facile ou plus sûr. Les adversaires peuvent abuser d'un certain nombre d'outils pour compresser ou chiffrer des données avant l'extraction. Certains outils tiers peuvent être préinstallés, tel que tar sur Linux et macOS ou zip sur les systèmes Windows. Sur Windows, diantz ou makecab peuvent être utilisés pour mettre en paquets des fichiers collectés dans un format cabinet (.cab). Diantz peut également être utilisé pour télécharger et compresser des fichiers à partir de sources externes (par exemple, [Staging de données à distance](https://attack.mitre.org/techniques/T1074/002)).",
+    "sources": [
+      "mitre_4_chunk_1",
+      "mitre_4_chunk_2"
+    ]
+  },
+  {
+    "id": "q05",
+    "category": "mitre",
+    "question": "What is T1055.011 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1055.011",
+      "Extra Window Memory Injection"
+    ],
+    "matched_contains": [
+      "T1055.011"
+    ],
+    "coverage_score": 0.5,
+    "mode": "exact",
+    "answer": "En MITRE ATT&CK, T1055.011 représente l'injection de mémoire supplémentaire de fenêtre Extra (EWM). Cela est une sous-technique utilisée par les adversaires pour injecter du code malicieux dans un processus en évitant les défenses basées sur le processus, ainsi qu'en éventuellement accédant à des privilèges élevés. Cette injection de mémoire se fait en exécutant du code arbitraire dans l'espace mémoire d'un processus séparé.\n\nSources utilisées :\n- Microsoft Window Classes (Citation)\n- Microsoft GetWindowLong fonction (Citation)\n- Microsoft SetWindowLong fonction (Citation)\n- Elastic Process Injection juillet 2017 (Citation)\n- MalwareTech Power Loader août 2013 (Citation)\n- WeLiveSecurity Gapz et Redyms mars 2013 (Citation)",
+    "sources": [
+      "mitre_1_chunk_1",
+      "mitre_1_chunk_2",
+      "mitre_1_chunk_3",
+      "mitre_1_chunk_4"
+    ]
+  },
+  {
+    "id": "q06",
+    "category": "mitre",
+    "question": "What is T1205.002 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1205.002",
+      "Socket Filters"
+    ],
+    "matched_contains": [
+      "T1205.002"
+    ],
+    "coverage_score": 0.5,
+    "mode": "exact",
+    "answer": "La technique T1205.002 dans MITRE ATT&CK s'appelle les Filtres de socket. Les adversaires peuvent appliquer des filtres à une interface réseau pour surveiller puis activer des portes d'entrée utilisées pour la persistance ou le contrôle à distance. Ils peuvent utiliser des librairies telles que `libpcap` pour ouvrir des sockets et installer des filtres afin de permettre ou de refuser certains types de données en passant par la socket. Lorsque l'interface réseau reçoit un paquet correspondant aux critères du filtre, des actions supplémentaires peuvent être déclenchées sur l'hôte, comme l'activation d'une chaîne inversée.\n\n(Traduction de la description dans le contexte fourni)",
+    "sources": [
+      "mitre_3_chunk_1",
+      "mitre_3_chunk_2",
+      "mitre_3_chunk_3"
+    ]
+  },
+  {
+    "id": "q07",
+    "category": "mitre",
+    "question": "What is T1053.002 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.002",
+      "At"
+    ],
+    "matched_contains": [
+      "T1053.002",
+      "At"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "T1053.002 est une sous-technique de l'attaque T1053 appelée \"Utilisation d'at pour la programmation de tâches\". Cela permet aux adversaires de planifier l'exécution de code malveillant à une date et heure spécifiées, en utilisant l'outil at sur les plates-formes Windows, Linux et macOS. Le service des tâches programmées doit être actif et le utilisateur doit être membre du groupe Administrateurs local pour utiliser cette méthode.",
+    "sources": [
+      "mitre_658_chunk_1",
+      "mitre_658_chunk_2",
+      "mitre_658_chunk_3"
+    ]
+  },
+  {
+    "id": "q08",
+    "category": "mitre",
+    "question": "What is T1053.003 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.003",
+      "Cron"
+    ],
+    "matched_contains": [
+      "T1053.003",
+      "Cron"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "En MITRE ATT&CK, T1053.003 est \"Utilisation de cron\" (Utilisation de cron en français). Il s'agit d'une méthode utilisée par les adversaires pour planifier l'exécution initiale ou récurrente de code malveillant en abusant de la commande `cron` dans les environnements Unix-like. La commande `cron` est un scheduler à temps basé utilisé sur des systèmes Unix-like, et le fichier `crontab` contient les entrées d'horodatage de cron prévues pour l'exécution et les heures spécifiées. Les fichiers `crontab` sont stockés dans des chemins de fichier système spécifiques à l'opérating system. Dans un environnement ESXi, les jobs cron doivent être créés directement via le fichier `crontab`.",
+    "sources": [
+      "mitre_120_chunk_1",
+      "mitre_120_chunk_2"
+    ]
+  },
+  {
+    "id": "q09",
+    "category": "mitre",
+    "question": "What is T1053.007 in MITRE ATT&CK?",
+    "expected_contains": [
+      "T1053.007",
+      "Container Orchestration Job"
+    ],
+    "matched_contains": [
+      "T1053.007"
+    ],
+    "coverage_score": 0.5,
+    "mode": "exact",
+    "answer": "En référence aux sources fournies, T1053.007 de MITRE ATT&CK représente l'utilisation d'un Job d'orchestration de conteneurs telles que Kubernetes pour programmer le déploiement de conteneurs configurés pour exécuter du code malveillant. (Citation : MITRE ATT&CK ID T1053.007, Source 1 et 2).",
+    "sources": [
+      "mitre_53_chunk_1",
+      "mitre_53_chunk_2"
+    ]
+  },
+  {
+    "id": "q10",
+    "category": "mitre",
+    "question": "What is the MITRE ATT&CK ID for Scheduled Task?",
+    "expected_contains": [
+      "T1053.005",
+      "Scheduled Task"
+    ],
+    "matched_contains": [
+      "Scheduled Task"
+    ],
+    "coverage_score": 0.5,
+    "mode": "faiss",
+    "answer": "En français, la réponse à votre question est \"L'ID MITRE ATT&CK pour Scheduled Task est T1053.\" Il s'agit de l'information mentionnée dans les sources 1, 2 et 3. La source 3 fournit également des informations supplémentaires sur le fait que la technique est spécifique au système Windows.",
+    "sources": [
+      "mitre_163_chunk_1",
+      "mitre_658_chunk_1",
+      "mitre_2_chunk_1",
+      "mitre_228_chunk_1",
+      "mitre_346_chunk_1"
+    ]
+  },
+  {
+    "id": "q11",
+    "category": "cve",
+    "question": "What is CVE-2024-13785?",
+    "expected_contains": [
+      "CVE-2024-13785",
+      "ARForms"
+    ],
+    "matched_contains": [
+      "CVE-2024-13785",
+      "ARForms"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La CVE-2024-13785 est une vulnérabilité de type exécution arbitraire de court-circuit dans le plugin The Contact Form, Survey, Quiz & Popup Form Builder – ARForms pour WordPress. Cette vulnérabilité existe dans toutes les versions jusqu'à et y compris la version 1.7.2 et est due au fait que le logiciel ne valide pas correctement une valeur avant d'exécuter do_shortcode, ce qui permet aux attaquants non authentifiés de lancer des court-circuits arbitraires.",
+    "sources": [
+      "cve_1_chunk_1"
+    ]
+  },
+  {
+    "id": "q12",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2024-13785?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-94"
+    ],
+    "matched_contains": [
+      "MEDIUM",
+      "CWE-94"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La gravité de CVE-2024-13785 est MEDIUM, avec un score CVSS de 5,6. Le défaut de sécurité concerné est le CWE-94, qui consiste en une exécution arbitraire de courtcode. Ceci se produit car la plateforme WordPress ne valide pas correctement une valeur avant l'exécution de do_shortcode, ce qui permet aux attaquants non authentifiés d'effectuer une exécution de courtecodes arbitraires.",
+    "sources": [
+      "cve_1_chunk_1"
+    ]
+  },
+  {
+    "id": "q13",
+    "category": "cve",
+    "question": "What is CVE-2025-13910?",
+    "expected_contains": [
+      "CVE-2025-13910",
+      "WP-WebAuthn"
+    ],
+    "matched_contains": [
+      "CVE-2025-13910",
+      "WP-WebAuthn"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La CVE-2025-13910 est une faille de sécurité médium gravité qui affecte le plug-in WP-WebAuthn pour WordPress. Cette faille permet aux attaquants non authentifiés d'injecter des scripts web arbitraires sur la page des journaux, exécutables chaque fois qu'un utilisateur accède à cette page, si l'option de journalisation est activée dans les paramètres du plug-in. Cette faille est due à une insuffisance d'échappement des sorties et de sanitization d'entrées des attributs fournis par l'utilisateur. (Source 1)",
+    "sources": [
+      "cve_2_chunk_1"
+    ]
+  },
+  {
+    "id": "q14",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2025-13910?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La gravité de CVE-2025-13910 est évaluée à MEDIUM et la faiblesse consiste dans une insuffisance d'assainissement des entrées et d'échappement des sorties sur les attributs fournis par l'utilisateur, tel que signalé par CWE-79. Cela permet aux attaquants non authentifiés de placer des scripts web arbitraires dans des pages qui s'exécutent lorsque le utilisateur accède à la page de journal de plugin, si l'option de journalisation est activée dans les paramètres du plugin.",
+    "sources": [
+      "cve_2_chunk_1"
+    ]
+  },
+  {
+    "id": "q15",
+    "category": "cve",
+    "question": "What is CVE-2025-14037?",
+    "expected_contains": [
+      "CVE-2025-14037",
+      "Invelity Product Feeds"
+    ],
+    "matched_contains": [
+      "CVE-2025-14037",
+      "Invelity Product Feeds"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La CVE-2025-14037 est une faille de sécurité de haute gravité dans le plugin Invelity Product Feeds pour WordPress. Cette faille permet aux utilisateurs authentifiés administrateur d'effectuer la suppression de fichiers arbitraires sur le serveur en utilisant un empoisonnement de chemin par traversal, grâce à une absence de validation et de sanitisation dans la fonction 'createManageFeedPage'. Cette faille est publiée le 21 mars 2026 et a été modifiée le 23 mars 2026. Son score CVSS est de 8,1.",
+    "sources": [
+      "cve_3_chunk_1"
+    ]
+  },
+  {
+    "id": "q16",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2025-14037?",
+    "expected_contains": [
+      "HIGH",
+      "CWE-352"
+    ],
+    "matched_contains": [
+      "HIGH",
+      "CWE-352"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La gravité de CVE-2025-14037 est HIGH (haute) avec un score CVSS de 8.1. Le défaut sous-jacent est CWE-352, qui se réfère à une absence de validation et sanitisation appropriées dans la fonction 'createManageFeedPage' du plugin Invelity Product Feeds pour WordPress. Cette faille permet aux attaquants administrateurs autorisés de supprimer des fichiers arbitraires sur le serveur via des demandes spécialement conçues qui incluent des séquences de traverse de chemin, à condition qu'ils puissent tromper un administrateur en faisant cliquer sur un lien malveillant.",
+    "sources": [
+      "cve_3_chunk_1"
+    ]
+  },
+  {
+    "id": "q17",
+    "category": "cve",
+    "question": "What is CVE-2026-0609?",
+    "expected_contains": [
+      "CVE-2026-0609",
+      "Logo Slider"
+    ],
+    "matched_contains": [
+      "CVE-2026-0609",
+      "Logo Slider"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "L'identifiant CVE-2026-0609 désigne une vulnérabilité de type Cross-Site Scripting stocké (Stored XSS) sur le plugin Logo Slider – Logo Carousel, Logo Showcase & Client Logo Slider pour WordPress. Cette vulnérabilité affecte toutes les versions allant jusqu'à et y compris la version 4.9.0. Elle est due à une sanitisation d'entrée insuffisante et à un manque de sortie de balise échappement sur le shortcode 'logo-slider'. Cela permet aux attaquants authentifiés, ayant un accès au niveau utilisateur ou au-dessus, d'injecter des scripts web arbitraires dans des pages qui s'exécuteront chaque fois qu'une personne y accèdera.",
+    "sources": [
+      "cve_4_chunk_1"
+    ]
+  },
+  {
+    "id": "q18",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2026-0609?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [
+      "MEDIUM"
+    ],
+    "coverage_score": 0.5,
+    "mode": "exact",
+    "answer": "La gravité de CVE-2026-0609 est MEDIUM (Moyenne) avec un score CVSS de 6.4. Cette vulnérabilité correspond à une Cross-Site Scripting Stocquée (Stored XSS) due à une insuffisante sanitisation d'entrées et évasion d'escapement dans le court-circuit 'logo-slider' du plugin Logo Slider – Logo Carousel, Logo Showcase & Client Logo Slider Plugin pour WordPress. Cette vulnérabilité permet aux attaquants authentifiés à un niveau de droits élevé d'injecter des scripts web arbitraires sur des pages qui seront exécutés chaque fois qu'une personne accède à une page injectée.",
+    "sources": [
+      "cve_4_chunk_1"
+    ]
+  },
+  {
+    "id": "q19",
+    "category": "cve",
+    "question": "What is CVE-2026-1093?",
+    "expected_contains": [
+      "CVE-2026-1093",
+      "WPFAQBlock"
+    ],
+    "matched_contains": [
+      "CVE-2026-1093",
+      "WPFAQBlock"
+    ],
+    "coverage_score": 1.0,
+    "mode": "exact",
+    "answer": "La CVE-2026-1093 est une vulnérabilité de type Cross-Site Scripting (XSS) stocké dans le plugin WPFAQBlock – FAQ & Accordion Plugin For Gutenberg pour WordPress. Cette vulnérabilité existe jusqu'à la version 1.1 en raison d'une insuffisance d'assainissement des entrées et de l'évitement de sortie sur les attributs utilisateurs fournis. Cela permet à des attaquants authentifiés avec un niveau d'accès Contributor ou supérieur d'injecter des scripts web arbitraires dans des pages qui s'exécuteront chaque fois qu'une personne accèdera à une page injectée. (Severité: MEDIUM, Score CVSS : 6.4)",
+    "sources": [
+      "cve_5_chunk_1"
+    ]
+  },
+  {
+    "id": "q20",
+    "category": "cve",
+    "question": "What is the severity and weakness of CVE-2026-1093?",
+    "expected_contains": [
+      "MEDIUM",
+      "CWE-79"
+    ],
+    "matched_contains": [
+      "MEDIUM"
+    ],
+    "coverage_score": 0.5,
+    "mode": "exact",
+    "answer": "La gravité de CVE-2026-1093 est MEDIUM (moyenne) avec un score CVSS de 6.4. Cette faille tient à une vulnérabilité à l'Injection de Script Cross-Site Stocké, et elle se produit grâce à un manque d'assainissement des entrées et de sortie non échappée des attributs utilisateur fournis dans le plugin WPFAQBlock– FAQ & Accordion Plugin For Gutenberg de WordPress. Cette faille permet à des attaquants authentifiés, avec un niveau de droits d'au moins Contributor, d'injecter des scripts web arbitraires sur des pages qui s'exécuteront chaque fois qu'une personne accède à une page injectée.",
+    "sources": [
+      "cve_5_chunk_1"
+    ]
+  }
+]

@@ -1,0 +1,196 @@
+{
+  "summary": {
+    "rag_average_score": 0.85,
+    "llm_only_average_score": 0.4,
+    "average_gain": 0.44999999999999996,
+    "rag_better_count": 15,
+    "llm_only_better_count": 0,
+    "equal_count": 5,
+    "mitre_rag_average": 0.8,
+    "mitre_llm_average": 0.55,
+    "cve_rag_average": 0.9,
+    "cve_llm_average": 0.25
+  },
+  "comparison": [
+    {
+      "id": "q01",
+      "category": "mitre",
+      "question": "What is T1053 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q02",
+      "category": "mitre",
+      "question": "What is T1053.005 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q03",
+      "category": "mitre",
+      "question": "What is T1021.005 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q04",
+      "category": "mitre",
+      "question": "What is T1560.001 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q05",
+      "category": "mitre",
+      "question": "What is T1055.011 in MITRE ATT&CK?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.5,
+      "delta": 0.0,
+      "winner": "EQUAL"
+    },
+    {
+      "id": "q06",
+      "category": "mitre",
+      "question": "What is T1205.002 in MITRE ATT&CK?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.5,
+      "delta": 0.0,
+      "winner": "EQUAL"
+    },
+    {
+      "id": "q07",
+      "category": "mitre",
+      "question": "What is T1053.002 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 1.0,
+      "delta": 0.0,
+      "winner": "EQUAL"
+    },
+    {
+      "id": "q08",
+      "category": "mitre",
+      "question": "What is T1053.003 in MITRE ATT&CK?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q09",
+      "category": "mitre",
+      "question": "What is T1053.007 in MITRE ATT&CK?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.5,
+      "delta": 0.0,
+      "winner": "EQUAL"
+    },
+    {
+      "id": "q10",
+      "category": "mitre",
+      "question": "What is the MITRE ATT&CK ID for Scheduled Task?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.5,
+      "delta": 0.0,
+      "winner": "EQUAL"
+    },
+    {
+      "id": "q11",
+      "category": "cve",
+      "question": "What is CVE-2024-13785?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q12",
+      "category": "cve",
+      "question": "What is the severity and weakness of CVE-2024-13785?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.0,
+      "delta": 1.0,
+      "winner": "RAG"
+    },
+    {
+      "id": "q13",
+      "category": "cve",
+      "question": "What is CVE-2025-13910?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q14",
+      "category": "cve",
+      "question": "What is the severity and weakness of CVE-2025-13910?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.0,
+      "delta": 1.0,
+      "winner": "RAG"
+    },
+    {
+      "id": "q15",
+      "category": "cve",
+      "question": "What is CVE-2025-14037?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q16",
+      "category": "cve",
+      "question": "What is the severity and weakness of CVE-2025-14037?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.0,
+      "delta": 1.0,
+      "winner": "RAG"
+    },
+    {
+      "id": "q17",
+      "category": "cve",
+      "question": "What is CVE-2026-0609?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q18",
+      "category": "cve",
+      "question": "What is the severity and weakness of CVE-2026-0609?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.0,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q19",
+      "category": "cve",
+      "question": "What is CVE-2026-1093?",
+      "rag_score": 1.0,
+      "llm_only_score": 0.5,
+      "delta": 0.5,
+      "winner": "RAG"
+    },
+    {
+      "id": "q20",
+      "category": "cve",
+      "question": "What is the severity and weakness of CVE-2026-1093?",
+      "rag_score": 0.5,
+      "llm_only_score": 0.0,
+      "delta": 0.5,
+      "winner": "RAG"
+    }
+  ]
+}

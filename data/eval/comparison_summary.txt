@@ -1,0 +1,16 @@
+=== COMPARAISON RAG vs LLM SEUL ===
+
+Score moyen RAG : 0.850
+Score moyen LLM seul : 0.400
+Gain moyen du RAG : 0.450
+
+Nombre de questions où RAG est meilleur : 15
+Nombre de questions où LLM seul est meilleur : 0
+Nombre de questions à égalité : 5
+
+--- Détail par catégorie ---
+MITRE - RAG : 0.800
+MITRE - LLM seul : 0.550
+
+CVE - RAG : 0.900
+CVE - LLM seul : 0.250
