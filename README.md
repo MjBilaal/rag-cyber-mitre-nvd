@@ -1,89 +1,145 @@
 # rag-cyber-mitre-nvd
 
-Assistant de questions-réponses en cybersécurité qui répond à partir de MITRE ATT&CK et des CVE récentes du NVD, via une recherche hybride (exact-match + BM25 + FAISS) et un LLM exécuté en local (Mistral via Ollama).
+Assistant de questions-réponses pour l'analyse de menaces : on l'interroge en langage naturel sur une technique MITRE ATT&CK ou une CVE, il répond en français à partir des sources officielles, extraits à l'appui, avec un LLM exécuté en local.
+Sur 20 questions d'évaluation, le RAG retrouve 18 des 24 informations absentes de la question (nom, produit, sévérité, CWE…) ; Mistral seul n'en retrouve aucune.
 
-## Description
+## Le problème
 
-Un LLM seul connaît mal les CVE récentes (publiées après son entraînement) et invente facilement des identifiants ou des scores. Ce projet construit un pipeline RAG complet qui ancre les réponses dans des sources officielles :
+Face à un identifiant dans une alerte ou un bulletin (`CVE-2025-14037`, `T1053.005`), il faut ouvrir la fiche NVD ou la page ATT&CK pour retrouver la sévérité, la faiblesse (CWE), le produit concerné ou les pistes de détection. Un LLM généraliste répond plus vite, mais il ne connaît pas les CVE publiées après son entraînement et invente les détails. Ce projet interroge un corpus local construit à partir de MITRE ATT&CK et du flux NVD, actualisable en relançant les scripts de téléchargement, et montre les extraits utilisés pour chaque réponse.
 
-1. **Collecte** : téléchargement du bundle STIX MITRE ATT&CK Enterprise et du flux JSON 2.0 « recent » du NVD.
-2. **Extraction** : techniques ATT&CK non révoquées et non dépréciées (ID, plateformes, sources de données, détection) ; CVE avec description, score et sévérité CVSS (v4.0 → v2 par ordre de priorité), CWE associées.
-3. **Documents et chunks** : un document texte par technique ou CVE, découpé en chunks de 120 mots avec 30 mots de recouvrement.
-4. **Indexation** : embeddings `all-MiniLM-L6-v2` (384 dimensions) dans un index FAISS `IndexFlatL2`.
-5. **Recherche** en deux étapes :
-   - si la question contient un identifiant (`CVE-AAAA-NNNN`, `T1053`, `T1053.005`), recherche exacte sur les métadonnées ;
-   - sinon, recherche hybride : 10 candidats FAISS (score `1 / (1 + distance)`) et 10 candidats BM25 (normalisés), fusionnés avec `0.6 × vecteur + 0.4 × BM25`, top 5 conservé.
-6. **Génération** : prompt contraint (« répondre uniquement à partir du contexte », citer les ID, signaler un contexte insuffisant), réponse en français par Mistral via Ollama.
+## 🧱 Architecture
 
-Deux interfaces Streamlit affichent la réponse et les sources utilisées avec leurs scores :
-- `app.py` : exact-match + FAISS ;
-- `app_hybrid.py` : exact-match + BM25 + FAISS.
+```mermaid
+flowchart TB
+    subgraph IDX["1 · Indexation (scripts src/)"]
+        direction LR
+        A["MITRE ATT&CK<br/>enterprise-attack.json"] --> C["Extraction<br/>techniques et CVE"]
+        B["NVD<br/>flux CVE recent"] --> C
+        C --> D["Documents<br/>un par technique ou CVE"]
+        D --> E["Chunking<br/>120 mots, recouvrement 30"]
+        E --> F["Embeddings<br/>all-MiniLM-L6-v2"]
+        F --> G[("Index FAISS<br/>+ chunks JSON")]
+    end
+    subgraph REQ["2 · Requête (Streamlit ou CLI)"]
+        direction LR
+        Q["Question"] --> R{"ID CVE ou ATT&CK<br/>dans la question ?"}
+        R -- oui --> X["Correspondance exacte<br/>sur les métadonnées"]
+        R -- non --> H["FAISS<br/>ou FAISS + BM25"]
+        X --> P["Prompt contraint<br/>question + 5 chunks"]
+        H --> P
+        P --> L["Mistral via Ollama<br/>en local"]
+        L --> S["Réponse<br/>+ sources"]
+    end
+    IDX -- "index et chunks" --> REQ
+```
 
-Corpus complet utilisé : 691 techniques ATT&CK, 1 948 CVE, soit 2 639 documents et 3 926 chunks.
+| Étape | Script | Détail |
+|---|---|---|
+| 1. Récupération | `download_mitre.py`, `download_nvd_recent.py` | Bundle STIX `enterprise-attack.json` du dépôt `mitre/cti` et flux `nvdcve-2.0-recent.json.gz` du NVD |
+| 2. Extraction | `extract_mitre_techniques.py`, `extract_nvd_recent.py` | Techniques non révoquées et non dépréciées (ID, nom, plateformes, sources de données, détection) ; CVE avec description, score et sévérité CVSS (v4.0, sinon v3.1, v3.0, v2) et CWE |
+| 3. Documents | `build_rag_documents.py` | Un document texte par technique ou CVE, avec ses métadonnées (`attack_id`, `cve_id`, sévérité, score) |
+| 4. Chunking | `chunk_rag_documents.py` | Fenêtres de 120 mots avec 30 mots de recouvrement |
+| 5. Embeddings | `build_faiss_full.py` | `sentence-transformers/all-MiniLM-L6-v2`, vecteurs de 384 dimensions |
+| 6. Index | `build_faiss_full.py` | FAISS `IndexFlatL2` (recherche exacte par distance L2), chunks et métadonnées enregistrés en JSON |
+| 7. Récupération | `app*.py`, `mini_rag_*.py` | Si la question contient un identifiant (`CVE-AAAA-NNNN`, `T1053`, `T1053.005`), correspondance exacte sur les métadonnées ; sinon recherche FAISS ou hybride |
+| 8. Génération | `app*.py`, `mini_rag_*.py` | Prompt contraint (répondre uniquement à partir du contexte, signaler un contexte insuffisant, citer les ID, répondre en français), envoyé à Mistral via l'API locale d'Ollama |
 
-### Évaluation : RAG vs LLM seul
+Corpus au moment de l'évaluation : 691 techniques, 1 948 CVE, soit 2 639 documents et 3 926 chunks.
 
-20 questions (10 MITRE, 10 CVE) dans `data/eval/questions.json`. Le score de couverture est la part des éléments attendus (ID, nom, sévérité, CWE) présents dans la réponse.
+## Stack technique
 
-| Score moyen de couverture | RAG (`evaluate_rag.py`) | LLM seul |
+- **Python 3.11** (version testée)
+- **FAISS** (`faiss-cpu`) : index vectoriel
+- **sentence-transformers** : embeddings `all-MiniLM-L6-v2`
+- **rank-bm25** : recherche lexicale de la variante hybride
+- **Ollama + Mistral** : génération en local, sans API externe ni clé
+- **Streamlit** : interfaces web
+- `numpy`, `requests`, `python-dotenv`
+- Données : MITRE ATT&CK Enterprise (STIX 2.1), NVD CVE JSON 2.0
+
+## Fonctionnalités
+
+### Variantes de RAG
+
+| Variante | Recherche | Point d'entrée |
+|---|---|---|
+| Small | FAISS seul, index de test de 100 chunks, top 3 | `src/mini_rag_small.py` |
+| Full | FAISS seul, corpus complet, top 5 | `src/mini_rag_full.py` |
+| Full v2 | Correspondance exacte sur l'ID, sinon FAISS | `src/mini_rag_full_v2.py`, `app.py` |
+| Hybride | Correspondance exacte sur l'ID, sinon FAISS + BM25 | `src/mini_rag_hybrid.py`, `app_hybrid.py` |
+
+Recherche hybride : 10 candidats FAISS (score `1 / (1 + distance)`) et 10 candidats BM25 (score divisé par le meilleur score BM25), fusionnés par `0,6 × vecteur + 0,4 × BM25`. Les 5 meilleurs chunks forment le contexte.
+
+### Interfaces Streamlit
+
+`app.py` (exact-match + FAISS) et `app_hybrid.py` (exact-match + BM25 + FAISS) affichent :
+- la réponse de Mistral ;
+- le mode de recherche utilisé (`exact`, `faiss` ou `hybrid`) ;
+- chaque source dans un encart dépliable : identifiant du chunk, document parent, extrait, et distance FAISS (`app.py`) ou scores hybride, vectoriel et BM25 (`app_hybrid.py`).
+
+### 📊 Évaluation : RAG vs LLM seul
+
+Une chaîne d'évaluation compare, sur les mêmes 20 questions (10 ATT&CK, 10 CVE), les réponses du RAG et celles de Mistral sans contexte.
+
+| Fichier | Rôle | Sortie |
+|---|---|---|
+| `data/eval/questions.json` | Questions et éléments attendus (ID, nom, produit, sévérité, CWE) | |
+| `src/evaluate_rag.py` | Pipeline exact-match + FAISS + Mistral ; enregistre réponse, mode de recherche et sources | `rag_results.json` |
+| `src/evaluate_llm_only.py` | Mêmes questions posées à Mistral sans contexte | `llm_only_results.json` |
+| `src/compare_results.py` | Score par question, gagnant, moyennes globales et par catégorie | `comparison_results.json`, `comparison_summary.txt` |
+
+Le score de couverture est la part des éléments attendus retrouvés dans la réponse (comparaison de sous-chaînes, sans tenir compte de la casse).
+
+| Couverture moyenne | RAG | LLM seul |
 |---|---|---|
 | Global | **0,85** | 0,40 |
 | MITRE ATT&CK | **0,80** | 0,55 |
 | CVE | **0,90** | 0,25 |
 
-Le RAG est meilleur sur 15 questions, à égalité sur 5, jamais moins bon. Résultats détaillés dans `data/eval/`.
+Le RAG est meilleur sur 15 questions, à égalité sur 5, jamais moins bon.
 
-## Stack technique
+Décomposition calculée à partir de `rag_results.json` et `llm_only_results.json` :
 
-- Python 3.11
-- `sentence-transformers` (all-MiniLM-L6-v2), `faiss-cpu`, `rank-bm25`
-- Ollama + modèle `mistral` (inférence locale)
-- Streamlit
-- Sources : [MITRE ATT&CK](https://github.com/mitre/cti) (STIX 2.1), [NVD CVE JSON 2.0 feeds](https://nvd.nist.gov/vuln/data-feeds)
+| Éléments attendus retrouvés | RAG | LLM seul |
+|---|---|---|
+| Déjà présents dans le texte de la question (16) | 16 | 16 |
+| Absents de la question : ID, nom, produit, sévérité, CWE (24) | **18** | **0** |
 
-## Structure
-
-```
-.
-├── app.py                      # Interface Streamlit : exact-match + FAISS
-├── app_hybrid.py               # Interface Streamlit : exact-match + BM25 + FAISS
-├── requirements.txt
-├── .env.example
-├── data/
-│   ├── sample/                 # Échantillon : 50 techniques + 50 CVE (couvre les 20 questions d'évaluation)
-│   └── eval/                   # Questions, résultats RAG / LLM seul, comparaison
-└── src/
-    ├── config.py               # Chemins et paramètres (lus depuis .env)
-    ├── download_*.py           # Téléchargement MITRE / NVD
-    ├── extract_*.py            # Extraction des champs utiles
-    ├── build_rag_documents.py  # Construction des documents texte
-    ├── chunk_rag_documents.py  # Découpage en chunks
-    ├── build_faiss_*.py        # Construction de l'index FAISS (petit test / complet)
-    ├── mini_rag_*.py           # Versions CLI successives (small → full → v2 exact-match → hybride)
-    ├── evaluate_*.py           # Évaluation RAG et LLM seul
-    ├── compare_results.py      # Tableau comparatif
-    └── read_* / preview_* / test_* / search_*  # Scripts d'exploration
-```
-
-Les données brutes, les données traitées et l'index FAISS ne sont pas versionnés : les scripts les régénèrent.
+Limites de la mesure :
+- la comparaison de sous-chaînes est indulgente : pour `T1053.002`, l'élément attendu « At » est trouvé dans n'importe quel mot contenant « at » (« ATT&CK », « catalogue ») ;
+- 19 questions sur 20 contiennent un identifiant et passent par la correspondance exacte ; la variante hybride n'est pas évaluée ;
+- une seule exécution, sans température fixée : les réponses de Mistral peuvent varier d'un passage à l'autre.
 
 ## Installation et lancement
 
-Prérequis : Python 3.11 et [Ollama](https://ollama.com) installé.
+### Prérequis
+
+- Python 3.11
+- [Ollama](https://ollama.com) installé, avec le modèle Mistral (environ 4 Go) :
+
+  ```bash
+  ollama pull mistral
+  ```
+
+- **Ollama doit tourner en local** pendant l'utilisation. L'application de bureau démarre le serveur ; sinon, lancer `ollama serve`. Les scripts l'appellent sur `http://127.0.0.1:11434`.
+- Une connexion Internet au premier lancement, pour télécharger le modèle d'embeddings depuis Hugging Face (et les données en option B).
+
+### 1. Installer
 
 ```bash
-ollama pull mistral
+git clone https://github.com/MjBilaal/rag-cyber-mitre-nvd.git
+cd rag-cyber-mitre-nvd
 python -m venv .venv
-source .venv/bin/activate        # Windows : .venv\Scripts\activate
+source .venv/bin/activate          # Windows : .venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env
+cp .env.example .env               # Windows : copy .env.example .env
 ```
 
-Toutes les commandes se lancent **depuis la racine du dépôt** (chemins relatifs).
+Toutes les commandes suivantes se lancent depuis la racine du dépôt.
 
-### Option A : échantillon (quelques minutes)
+### 2. Construire l'index
 
-Dans `.env`, remplacer `DATA_PROCESSED=data/processed` par `DATA_PROCESSED=data/sample`, puis :
+**Option A : échantillon fourni** (50 techniques et 50 CVE, dont celles des questions d'évaluation). Dans `.env`, remplacer `DATA_PROCESSED=data/processed` par `DATA_PROCESSED=data/sample`, puis :
 
 ```bash
 python src/build_rag_documents.py
@@ -91,9 +147,7 @@ python src/chunk_rag_documents.py
 python src/build_faiss_full.py
 ```
 
-### Option B : corpus complet
-
-Avec `DATA_PROCESSED=data/processed` :
+**Option B : corpus complet**, avec `DATA_PROCESSED=data/processed` :
 
 ```bash
 python src/download_mitre.py
@@ -105,15 +159,19 @@ python src/chunk_rag_documents.py
 python src/build_faiss_full.py
 ```
 
-Le flux NVD « recent » évolue en continu : un nouveau téléchargement ne contiendra plus forcément les CVE des questions d'évaluation. L'échantillon les conserve.
+Le flux NVD « recent » évolue en continu : un nouveau téléchargement ne contiendra plus forcément les CVE des questions d'évaluation.
 
-### Lancer l'interface
+### 3. Lancer
 
 ```bash
 streamlit run app_hybrid.py
 ```
 
-### Rejouer l'évaluation
+L'interface s'ouvre sur `http://localhost:8501`. `streamlit run app.py` lance la version sans BM25.
+
+En ligne de commande, `python src/mini_rag_hybrid.py` demande la question dans le terminal. `src/mini_rag_small.py` nécessite d'abord `python src/build_faiss_small.py`.
+
+### 4. Rejouer l'évaluation
 
 ```bash
 python src/evaluate_rag.py
@@ -121,21 +179,18 @@ python src/evaluate_llm_only.py
 python src/compare_results.py
 ```
 
-## Ce que j'ai appris / côté sécurité
+Ces scripts réécrivent les fichiers de résultats de `data/eval/`. Les scores ci-dessus ont été obtenus sur le corpus complet.
 
-- **Les identifiants exacts sont le point faible des embeddings.** Mesuré avec all-MiniLM-L6-v2 (similarité cosinus) :
-  - « What is CVE-2025-14037? » et « What is CVE-2025-14038? » : **0,976** ;
-  - « What is CVE-2025-14037? » et son vrai sujet (CSRF dans un plugin WordPress) : **0,151**.
+À noter :
+- `app.py`, `app_hybrid.py` et `evaluate_rag.py` lisent l'index dans `vectorstore/faiss_index/` (chemin fixe) : garder la valeur par défaut de `FAISS_DIR` ;
+- le modèle (`OLLAMA_MODEL = "mistral"`) et le nombre de chunks retenus (`TOP_K`) sont des constantes en tête de chaque script.
 
-  Le modèle encode la forme de la question, pas l'identifiant. D'où la recherche exacte par expression régulière sur les métadonnées, puis BM25 pour les termes lexicaux (noms de produits, CWE).
-- **Le LLM seul hallucine surtout sur les CVE** (0,25 de couverture) : les CVE récentes sont postérieures à son entraînement. Le RAG passe à 0,90, et l'affichage des sources permet de vérifier chaque réponse.
-- **Inférence locale** : aucune donnée envoyée à une API tierce et aucune clé à gérer. C'est un critère réel pour un usage en SOC ou sur des données sensibles.
-- **Injection de prompt indirecte** : les descriptions CVE et ATT&CK sont du texte externe injecté tel quel dans le prompt. Une description malveillante pourrait tenter de détourner le modèle. La consigne « uniquement le contexte » limite l'effet sans l'empêcher ; un filtrage du contexte serait l'étape suivante.
-- **Limites de l'évaluation**, à garder en tête :
-  - le score est une recherche de sous-chaînes, donc indulgent ;
-  - 19 questions sur 20 contiennent un identifiant, ce qui mesure surtout la voie exact-match ;
-  - `evaluate_rag.py` évalue la version exact-match + FAISS, pas la version hybride.
+## 💡 Ce que j'ai appris
 
-## Données
+- **Le score du LLM seul est un écho de la question** : ses 0,40 viennent uniquement d'éléments déjà écrits dans la question. Pour le reste, il se trompe avec assurance (`T1086` pour « Scheduled Task », « CVSS 9,8, RCE » pour une XSS notée MEDIUM 6,4).
+- **Les erreurs restantes du RAG viennent de la génération, pas de la recherche** : pour les 6 réponses incomplètes, l'élément attendu figurait dans le contexte transmis. La consigne « répondre en français » pousse Mistral à traduire les noms officiels (« Filtres de socket ») et à paraphraser les CWE ; il faudrait imposer de citer noms et identifiants tels quels.
+- **Les embeddings ignorent les identifiants** : avec MiniLM, « What is CVE-2025-14037? » et « What is CVE-2025-14038? » ont une similarité cosinus de 0,976. D'où la correspondance exacte sur les ID, complétée par BM25 dans la variante hybride.
+
+---
 
 MITRE ATT&CK® est une marque déposée de The MITRE Corporation ; les données sont reproduites selon ses [conditions d'utilisation](https://attack.mitre.org/resources/legal-and-branding/terms-of-use/). Les données CVE proviennent de la National Vulnerability Database (NIST).
